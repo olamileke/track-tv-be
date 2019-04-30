@@ -39,4 +39,9 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public function tvShows()
+    {
+        return $this->belongsToMany('App\TvShow', 'subscriptions', 'user_id', 'tvshow_id');
+    }
 }
