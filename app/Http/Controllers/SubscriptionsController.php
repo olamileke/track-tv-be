@@ -26,7 +26,6 @@ class SubscriptionsController extends Controller
 
         $data=[];
 
-
         foreach($tvshows as $show)
         {
             $data[$show->tvshow_id]=Carbon::parse($show->created_at)->diffForHumans();
@@ -52,20 +51,36 @@ class SubscriptionsController extends Controller
         return response()->json(['data'=>'Subscribed successfully', 200]);
     }
 
+    // RETURNING AN ARRAY CONTAINING THE IDS OF THE TV SHOWS THE USER HAS SUBSCRIBED TO
 
-    // CHECKING IF THE USER HAS SUBSCRIBED TO A PARTICULAR TV SHOW
+    public function getSubIDs()
+    {
+    	$user=Auth::guard('api')->user();
+
+    	$subscriptions=DB::Table('subscriptions')->where('user_id', $user->id)->select('tvshow_id')->get();
+
+    	$showIDs=[];
+
+    	foreach($subscriptions as $subscription)
+    	{
+    		array_push($showIDs, $subscription->tvshow_id);
+    	}
+
+    	return response()->json([$showIDs],200);
+    }
+
 
     public function hasSubscribed($id)
     {
-        $user=Auth::guard('api')->user();
+    	$user=Auth::guard('api')->user();
 
-        $subscription=DB::Table('subscriptions')->where('user_id', $user)->where('tvshow_id', $id)->first();
+    	$subscription=DB::Table('subscriptions')->where('user_id', $user->id)->where('tvshow_id', $id)->first();
 
-        if($subscription) 
-        {
-            return response()->json(['data'=>true], 200);
-        }
+    	if($subscription)
+    	{
+    		return response()->json(['data'=>true], 200);
+    	}
 
-        return response()->json(['data'=>false], 200);
+    	return response()->json(['data'=>false],200);
     }
 }

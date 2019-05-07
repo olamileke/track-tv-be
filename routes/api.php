@@ -24,9 +24,11 @@ Route::group(['middleware'=>'auth:api'], function() {
 
 	Route::get('/getsubscriptions', 'SubscriptionsController@get'); 
 
+	Route::post('/logout', 'Auth\LoginController@logout');
+
 	Route::post('/hassubscribed/{id}', 'SubscriptionsController@hasSubscribed');
 
-	Route::post('/logout', 'Auth\LoginController@logout');
+	Route::get('/getsubscribedids', 'SubscriptionsController@getSubIDs');
 
 	Route::post('/subscribe', 'SubscriptionsController@subscribe');
 
