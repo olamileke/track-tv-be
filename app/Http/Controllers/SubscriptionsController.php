@@ -21,14 +21,14 @@ class SubscriptionsController extends Controller
     	$user=Auth::guard('api')->user();
 
     	$tvshows=DB::Table('subscriptions')->where('user_id', $user->id)
-    									   ->select('tvshow_id', 'created_at')
+    									   ->select('tvshow_id')
     									   ->get();
 
         $data=[];
 
         foreach($tvshows as $show)
         {
-            $data[$show->tvshow_id]=Carbon::parse($show->created_at)->diffForHumans();
+            array_push($data, $show->tvshow_id);
         }
 
         return response()->json($data, 200);
@@ -51,6 +51,18 @@ class SubscriptionsController extends Controller
         return response()->json(['data'=>'Subscribed successfully', 200]);
     }
 
+
+    // UNSUBSCRIBE FROM A TV SHOW
+
+    public function unsubscribe($id)
+    {
+    	$user=Auth::guard('api')->user();
+
+    	DB::Table('subscriptions')->where('user_id', $user->id)->where('tvshow_id', $id)->delete();
+
+    	return response()->json(['data'=>'Successfully unsubscribed'], 200);
+    }
+
     // RETURNING AN ARRAY CONTAINING THE IDS OF THE TV SHOWS THE USER HAS SUBSCRIBED TO
 
     public function getSubIDs()
@@ -69,6 +81,8 @@ class SubscriptionsController extends Controller
     	return response()->json([$showIDs],200);
     }
 
+
+    // CHECKING IF THE USER HAS SUBSCRIBED TO A TV SHOW
 
     public function hasSubscribed($id)
     {
