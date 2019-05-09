@@ -21,14 +21,20 @@ class SubscriptionsController extends Controller
     	$user=Auth::guard('api')->user();
 
     	$tvshows=DB::Table('subscriptions')->where('user_id', $user->id)
-    									   ->select('tvshow_id')
+    									   ->select('tvshow_id', 'created_at')
     									   ->get();
 
         $data=[];
 
         foreach($tvshows as $show)
         {
-            array_push($data, $show->tvshow_id);
+        	$tvshow=TvShow::where('show_id', $show->tvshow_id)
+        				   ->select('show_id','name','next_episode_air_date', 'next_episode_number', 'next_episode_season', 'about_episode')
+        				   ->first();
+
+        	$tvshow->created_at=$show->created_at;
+
+        	array_push($data, $tvshow);
         }
 
         return response()->json($data, 200);
@@ -42,7 +48,7 @@ class SubscriptionsController extends Controller
 
         TvShow::firstOrCreate(['show_id'=>$request->show_id], ['show_id'=>$request->show_id, 'name'=>$request->name, 'imagepath'=>$request->imagepath, 'next_episode_air_date'=>$request->next_episode_air_date,
            'next_episode_number'=>$request->next_episode_number,
-           'next_episode_season'=>$request->next_episode_season]);
+           'next_episode_season'=>$request->next_episode_season, 'about_episode'=>$request->about_episode]);
 
         $user=Auth::guard('api')->user();
 
