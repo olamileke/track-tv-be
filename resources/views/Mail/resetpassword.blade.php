@@ -2,9 +2,10 @@
 <html>
 	<head>
 		<style type="text/css">
+
 			@import url('https://fonts.googleapis.com/css?family=Raleway');
 			@import url('https://fonts.googleapis.com/css?family=Quicksand');
-
+			
 			div.container
 			{
 				position:absolute;
@@ -34,10 +35,6 @@
 				box-sizing: border-box;
 			}
 
-			div.main img
-			{
-				border-radius: 50%;
-			}
 
 			p
 			{
@@ -61,7 +58,7 @@
 				text-align: center;
 			}
 
-			div.activate
+			div.reset
 			{
 				font-family: 'Quicksand', sans-serif;
 				color:rgba(0,0,0,0.7);
@@ -71,7 +68,7 @@
 				align-items: center;
 			}
 
-			div.activate a
+			div.reset a
 			{				
 				margin-top:30px;
 				text-decoration:none;
@@ -103,25 +100,24 @@
 				margin-top:15px;
 				color:rgba(0,0,0,0.4);
 			}
-
 		</style>
 	</head>
 	<body>
-
+		
 		<div class='container'>
 			
 			<div class='main'>
 
-				<p class='header'>Activate Your Account</p>
+				<p class='header'>Reset Password</p>
 
-				<p class='content'>Hey <b>{{ $user->name }}</b>, welcome to TrackTv. Just one more step to 
-				 complete your account setup
+				<p class='content'>Hey <b>{{ $user->name }}</b>, a password reset request was made on
+					your TrackTv account. 
 				</p>
 
-				<div class='activate'>
-					Click this link to activate your account
+				<div class='reset'>
+					To complete the process click this link
 
-					<a href="http://localhost:4200/account/activate/{{$token}}">Activate</a>
+					<a href="http://localhost:4200/password/reset/{{$user->remember_token}}">Reset</a>
 				</div>		
 				
 			</div>
@@ -132,5 +128,6 @@
 			</div>
 
 		</div>
+
 	</body>
 </html>

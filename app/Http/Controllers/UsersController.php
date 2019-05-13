@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Http\Request;
+
+use App\Mail\ResetPassword;
 
 use App\User;
 
@@ -98,5 +102,55 @@ class UsersController extends Controller
         }
 
         return false;
+    }
+
+
+    public function sendResetMail(Request $request)
+    {
+        $user=User::where('email', $request->email)->first();
+
+        if($user)
+        {
+            $user->remember_token=str_random(60);
+
+            $user->save();
+
+            Mail::to($user)->send(new ResetPassword($user));
+
+            return response()->json(['data'=>'Reset Password email sent'], 200);
+        }
+
+        return response()->json(['data'=>'User does not exist'], 404);
+    }
+
+
+    // CONFIRMING IF THE TOKEN ON THE PASSWORD RESET CHANGE IS REAL
+
+    public function checkResetToken($token)
+    {
+        $user=User::where('remember_token', $token)->first();
+
+        if($user)
+        {
+            return response()->json(['data'=>$user->name], 200);
+        }
+
+        return response()->json(['data'=>'User does not exist'], 404);
+    }
+
+
+    // CHANGING THE PASSWORD
+
+    public function resetPassword(Request $request, $token)
+    {
+        $user=User::where('remember_token', $token)->first();
+
+        $user->password=bcrypt($request->password);
+
+        $user->remember_token=null;
+
+        $user->save();
+
+        return response()->json(['data'=>'Password changed successfully'],200);
     }
 }

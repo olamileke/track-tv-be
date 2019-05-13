@@ -17,9 +17,6 @@ use App\Http\Resources\UserResource;
 
 use App\Mail\Register;
 
-use App\Http\Resources\ArticleResource;
-
-
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller

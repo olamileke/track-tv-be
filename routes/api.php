@@ -42,4 +42,10 @@ Route::post('/login', 'Auth\LoginController@login');
 
 Route::post('/account/activate/{token}', 'UsersController@activate');
 
+Route::post('/sendresetmail', 'UsersController@sendResetMail');
+
+Route::post('/checkresettoken/{token}', 'UsersController@checkResetToken');
+
+Route::post('/resetpassword/{token}', 'UsersController@resetPassword');
+
 

@@ -39,7 +39,7 @@ class SubscriptionsController extends Controller
 
         return response()->json($data, 200);
     }
-
+6                                                                               
 
     // SUBSCRIBING TO A TV SHOW
 
