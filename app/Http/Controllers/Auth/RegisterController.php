@@ -96,6 +96,11 @@ class RegisterController extends Controller
 
         Mail::to($user)->send(new Register($user, $token->getToken()));
 
+        if(count(Mail::failures()) > 0)
+        {
+            return response()->json(['data'=>'Problem sending email'], 413);
+        }
+
         return response()->json([new UserResource($user)], 200);
     }
 }

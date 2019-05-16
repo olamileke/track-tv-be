@@ -44,4 +44,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\TvShow', 'subscriptions', 'user_id', 'tvshow_id');
     }
+
+
+    public function getLastName()
+    {
+        return explode(' ', $this->name)[1];
+    }
 }

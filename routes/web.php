@@ -1,5 +1,11 @@
 <?php
 
+// use App\Mail\Register;
+
+// use App\User;
+
+// use Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +18,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  
+
 });

@@ -39,22 +39,26 @@ class SubscriptionsController extends Controller
 
         return response()->json($data, 200);
     }
-6                                                                               
+                                                                             
 
     // SUBSCRIBING TO A TV SHOW
 
     public function subscribe(Request $request)
     {
-
-        TvShow::firstOrCreate(['show_id'=>$request->show_id], ['show_id'=>$request->show_id, 'name'=>$request->name, 'imagepath'=>$request->imagepath, 'next_episode_air_date'=>$request->next_episode_air_date,
-           'next_episode_number'=>$request->next_episode_number,
-           'next_episode_season'=>$request->next_episode_season, 'about_episode'=>$request->about_episode]);
+        TvShow::firstOrCreate(['show_id'=>$request->show_id], ['show_id'=>$request->show_id, 
+            'name'=>$request->name, 
+            'imagepath'=>$request->imagepath,
+            // 'next_episode_title'=>$request->next_episode_title,
+            'next_episode_air_date'=>$request->next_episode_air_date,
+            'next_episode_number'=>$request->next_episode_number,
+            'next_episode_season'=>$request->next_episode_season, 
+            'about_episode'=>$request->about_episode]);
 
         $user=Auth::guard('api')->user();
 
         $user->tvShows()->attach($request->show_id);
 
-        return response()->json(['data'=>'Subscribed successfully', 200]);
+        return response()->json(['data'=>$request->next_episode_title],200);
     }
 
 
