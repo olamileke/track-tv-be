@@ -59,6 +59,7 @@ class SendReminderMail extends Command
         }
     }
 
+    // NOTIFYING THE SUBSCRIBERS TO A PARTICULAR TV SHOW THAT A NEW EPISODE IS OUT
 
     public function sendMail($show, $users)
     {
@@ -69,6 +70,9 @@ class SendReminderMail extends Command
 
         $this->setInformation($show);
     }
+
+
+    // UPDATING THE INFORMATION ABOUT THE TV SHOW IN THE DATABASE
 
     public function setInformation($show)
     {

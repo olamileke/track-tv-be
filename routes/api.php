@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+// use Auth;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +35,11 @@ Route::group(['middleware'=>'auth:api'], function() {
 	Route::get('/getsubscribedids', 'SubscriptionsController@getSubIDs');
 
 	Route::post('/subscribe', 'SubscriptionsController@subscribe');
+
+	Route::get('/user', function() {
+
+		return Auth::guard('api')->user();
+	});
 
 });
 

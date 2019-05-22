@@ -14,8 +14,6 @@ use Auth;
 
 class SubscriptionsController extends Controller
 {
-	// RETURNING THE IDS OF THE TVSHOWS WITH THE TIME SUBSCRIBED BY THE LOGGED IN USER
-
     public function get()
     {
     	$user=Auth::guard('api')->user();
@@ -38,10 +36,7 @@ class SubscriptionsController extends Controller
         }
 
         return response()->json($data, 200);
-    }
-                                                                             
-
-    // SUBSCRIBING TO A TV SHOW
+    }                                                                             
 
     public function subscribe(Request $request)
     {
@@ -61,9 +56,6 @@ class SubscriptionsController extends Controller
         return response()->json(['data'=>$request->next_episode_title],200);
     }
 
-
-    // UNSUBSCRIBE FROM A TV SHOW
-
     public function unsubscribe($id)
     {
     	$user=Auth::guard('api')->user();
@@ -72,8 +64,6 @@ class SubscriptionsController extends Controller
 
     	return response()->json(['data'=>'Successfully unsubscribed'], 200);
     }
-
-    // RETURNING AN ARRAY CONTAINING THE IDS OF THE TV SHOWS THE USER HAS SUBSCRIBED TO
 
     public function getSubIDs()
     {
@@ -90,9 +80,6 @@ class SubscriptionsController extends Controller
 
     	return response()->json([$showIDs],200);
     }
-
-
-    // CHECKING IF THE USER HAS SUBSCRIBED TO A TV SHOW
 
     public function hasSubscribed($id)
     {

@@ -18,8 +18,6 @@ use Auth;
 
 class UsersController extends Controller
 {
-	// ACTIVATING A USER
-
     public function activate($token)
     {
     	$token=new Token($token);
@@ -77,7 +75,7 @@ class UsersController extends Controller
         }
        
     }
-
+    
 
     public function checkImageSize($imagesize)
     {
@@ -123,9 +121,6 @@ class UsersController extends Controller
         return response()->json(['data'=>'User does not exist'], 404);
     }
 
-
-    // CONFIRMING IF THE TOKEN ON THE PASSWORD RESET CHANGE IS REAL
-
     public function checkResetToken($token)
     {
         $user=User::where('remember_token', $token)->first();
@@ -137,9 +132,6 @@ class UsersController extends Controller
 
         return response()->json(['data'=>'User does not exist'], 404);
     }
-
-
-    // CHANGING THE PASSWORD
 
     public function resetPassword(Request $request, $token)
     {
